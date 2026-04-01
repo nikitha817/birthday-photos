@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            background: #F8F8FF;
+            font-family: 'Nunito', Arial, sans-serif;
+            color: #222222;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Baloo 2', 'Comic Sans MS', cursive;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 32px 64px;
+        }
+
+        .section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 64px 0;
+        }
+
+        .section.active {
+            display: flex;
+        }
+
+        .heading-main {
+            font-size: clamp(36px, 8vw, 48px);
+            margin-bottom: 48px;
+            letter-spacing: 0.1em;
+        }
+
+        .heading-pink {
+            color: #FF69B4;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        .heading-blue {
+            color: #1E90FF;
+            text-shadow: 2px 2px 4px rgba(30, 144, 255, 0.2);
+        }
+
+        .illustration {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 48px 0;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            object-fit: contain;
+        }
+
+        .btn {
+            background: #87CEFA;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: 'Baloo 2', 'Comic Sans MS', cursive;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 12px rgba(135, 206, 250, 0.3);
+            transition: all 0.2s ease-out;
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(135, 206, 250, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-container {
+            align-self: flex-end;
+            margin-top: 32px;
+        }
+
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            max-width: 600px;
+            width: 100%;
+            margin: 32px 0;
+        }
+
+        .gift-box {
+            aspect-ratio: 1;
+            border-radius: 24px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(135, 206, 250, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .instruction {
+            color: #666666;
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .cake-section {
+            background: #222222;
+            border-radius: 24px;
+            padding: 64px;
+            color: white;
+            margin: 32px 0;
+        }
+
+        .cake-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .cake-text h3 {
+            font-size: clamp(28px, 6vw, 36px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .countdown-container {
+            background: linear-gradient(135deg, #87CEFA, #1E90FF);
+            padding: 48px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(30, 144, 255, 0.3);
+            margin: 32px 0;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .countdown-item {
+            background: rgba(255,255,255,0.2);
+            padding: 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .countdown-number {
+            font-family: 'Courier New', monospace;
+            font-size: clamp(40px, 10vw, 48px);
+            font-weight: 700;
+            color: #1E90FF;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .countdown-label {
+            font-size: 16px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .special-day {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 32px 0;
+        }
+
+        .special-day span {
+            color: #1E90FF;
+        }
+
+        .photo-collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .photo-collage img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-collage img:hover {
+            transform: scale(1.05);
+        }
+
+        .dark-section {
+            background: #222222;
+            color: white;
+            padding: 64px;
+            border-radius: 24px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .section {
+                padding: 32px 0;
+                gap: 24px;
+            }
+            
+            .cake-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .btn-container {
+                align-self: center;
+            }
+            
+            .gift-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .countdown-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Section 1: Intro -->
+        <section id="section-0" class="section active">
+            <h1 class="heading-main heading-pink">HAPPY BIRTHDAY</h1>
+            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Birthday cake with animals" class="illustration">
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(1)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 2: Surprise -->
+        <section id="section-1" class="section">
+            <h2 class="heading-main heading-blue">Are you ready for surprise?</h2>
+            <img src="https://images.unsplash.com/photo-1603796846092-e39d8e9d5e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Surprised bear" class="illustration">
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(2)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 3: How Dare You -->
+        <section id="section-2" class="section">
+            <h2 class="heading-main heading-blue">HOW DARE YOU!</h2>
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Angry bear" class="illustration">
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(3)">TRY AGAIN</button>
+            </div>
+        </section>
+
+        <!-- Section 4: Gift Grid -->
+        <section id="section-3" class="section">
+            <h2 class="heading-main">GIFT FOR YOU</h2>
+            <div class="gift-grid">
+                <div class="gift-box" onclick="openGift()">
+                    <img src="https://images.unsplash.com/photo-1608447248177-47c0d5c32d9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gift box">
+                </div>
+                <div class="gift-box" onclick="openGift()">
+                    <img src="https://images.unsplash.com/photo-1608447248177-47c0d5c32d9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gift box">
+                </div>
+                <div class="gift-box" onclick="openGift()">
+                    <img src="https://images.unsplash.com/photo-1608447248177-47c0d5c32d9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gift box">
+                </div>
+                <div class="gift-box" onclick="openGift()">
+                    <img src="https://images.unsplash.com/photo-1608447248177-47c0d5c32d9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gift box">
+                </div>
+            </div>
+            <p class="instruction">CLICK ANY GIFT TO OPEN</p>
+        </section>
+
+        <!-- Section 5: Gift Reveal -->
+        <section id="section-4" class="section">
+            <h2 class="heading-main heading-pink">SURPRISE!</h2>
+            <div class="photo-collage">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Celebration">
+                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587206?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Friends">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Birthday">
+                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Party">
+            </div>
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(5)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 6: Virtual Cake -->
+        <section id="section-5" class="section">
+            <div class="cake-section">
+                <div class="cake-grid">
+                    <div class="cake-text">
+                        <h3>Here's your virtual cake<br>it's calorie-free but full of love.</h3>
+                        <h3 style="font-size: 24px; margin-top: 16px;">Blow your candle and make your wish</h3>
+                    </div>
+                    <div style="position: relative; height: 400px;">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Birthday cake" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div class="candle" style="position: absolute; top: 25%; left: 25%; width: 4px; height: 48px; background: #FFD700; border-radius: 2px;"></div>
+                        <div class="candle" style="position: absolute; top: 25%; left: 50%; width: 4px; height: 48px; background: #FFD700; border-radius: 2px;"></div>
+                        <div class="candle" style="position: absolute; top: 25%; right: 25%; width: 4px; height: 48px; background: #FFD700; border-radius: 2px;"></div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <button class="btn" onclick="blowCake()">BLOW</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Countdown -->
+        <section id="section-6" class="section">
+            <h2 style="font-size: clamp(28px, 6vw, 32px);">Counting down to</h2>
+            <div class="countdown-container">
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">05</div>
+                        <div class="countdown-label">DAYS</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">12</div>
+                        <div class="countdown-label">HOURS</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">34</div>
+                        <div class="countdown-label">MINS</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">56</div>
+                        <div class="countdown-label">SECS</div>
+                    </div>
+                </div>
+                <div class="special-day">HETVI'S <span>SPECIAL DAY</span></div>
+            </div>
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(7)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 8: Photo Collage -->
+        <section id="section-7" class="section">
+            <div class="photo-collage" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Nature">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Friends">
+                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587206?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Celebration">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Party">
+                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Birthday">
+            </div>
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(8)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 9: Bunny -->
+        <section id="section-8" class="section">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cute bunny" class="illustration">
+            <div class="btn-container">
+                <button class="btn" onclick="nextSection(9)">NEXT</button>
+            </div>
+        </section>
+
+        <!-- Section 10: Love
