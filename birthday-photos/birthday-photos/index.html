@@ -1,219 +1,549 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Hetvi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Nunito', sans-serif; 
-            background: linear-gradient(135deg, #F8F8FF 0%, #E6E6FA 100%);
-            min-height: 100vh; 
-            overflow-x: hidden;
-        }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .section { 
-            min-height: 100vh; 
-            display: none; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .section.active { display: flex; }
-        .heading { 
-            font-family: 'Baloo 2', cursive; 
-            font-size: 48px; 
-            font-weight: 700; 
-            color: #FF69B4; 
-            text-transform: uppercase; 
-            letter-spacing: 3px; 
-            margin-bottom: 40px;
-        }
-        .btn { 
-            background: linear-gradient(45deg, #87CEFA, #4682B4); 
-            color: white; 
-            border: none; 
-            padding: 15px 40px; 
-            font-size: 18px; 
-            font-weight: 700; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            margin: 20px; 
-            transition: transform 0.3s;
-        }
-        .btn:hover { transform: scale(1.05); }
-        .gift-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 30px; 
-            max-width: 500px; 
-            margin: 40px 0;
-        }
-        .gift-box { 
-            width: 150px; 
-            height: 150px; 
-            background: linear-gradient(45deg, #FFB6C1, #FF69B4); 
-            border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 60px; 
-            cursor: pointer; 
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255,182,193,0.4);
-        }
-        .gift-box:hover { transform: scale(1.1) rotate(5deg); }
-        .photo-container { 
-            max-width: 400px; 
-            max-height: 300px; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            margin: 20px 0;
-        }
-        .photo-container img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-        .modal { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.8); 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1000;
-        }
-        .modal.active { display: flex; }
-        .modal-content { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 20px; 
-            max-width: 500px; 
-            text-align: center; 
-            max-height: 80vh; 
-            overflow-y: auto;
-        }
-        @media (max-width: 768px) {
-            .heading { font-size: 32px; }
-            .gift-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Section 1: Welcome -->
-        <section id="sec1" class="section active">
-            <h1 class="heading">HAPPY BIRTHDAY HETVI!</h1>
-            <div style="font-size: 80px; margin: 40px 0;">🎂🐻🎁🐰🐱</div>
-            <button class="btn" onclick="nextSection(2)">NEXT →</button>
-        </section>
-
-        <!-- Section 2: Gifts -->
-        <section id="sec2" class="section">
-            <h1 class="heading" style="color: #222;">GIFT FOR YOU</h1>
-            <div class="gift-grid">
-                <div class="gift-box" onclick="openGift(0)">🎁</div>
-                <div class="gift-box" onclick="openGift(1)">🎁</div>
-                <div class="gift-box" onclick="openGift(2)">🎁</div>
-                <div class="gift-box" onclick="openGift(3)">🎁</div>
-            </div>
-            <p style="color: #666; font-size: 18px; margin-top: 20px;">Click any gift to open!</p>
-        </section>
-
-        <!-- Section 3: Final -->
-        <section id="sec3" class="section">
-            <h1 class="heading" style="color: #1E90FF;">I Love You The Mostest!</h1>
-            <div style="font-size: 100px; margin: 40px 0;">💕🐱💐</div>
-            <p style="font-size: 24px; color: #222; margin: 20px 0;">Thank you for being amazing!</p>
-            <button class="btn" onclick="restart()">REPLAY 🎉</button>
-        </section>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    * { box-sizing: border-box; }
+    .font-baloo { font-family: 'Baloo 2', 'Nunito', 'Comic Sans MS', cursive, sans-serif; }
+    .font-nunito { font-family: 'Nunito', 'Arial', sans-serif; }
+    .section-container { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+    @keyframes float { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+    @keyframes wiggle { 0%,100%{ transform: rotate(0deg); } 25%{ transform: rotate(-3deg); } 75%{ transform: rotate(3deg); } }
+    .float-anim { animation: float 3s ease-in-out infinite; }
+    .wiggle-anim { animation: wiggle 2s ease-in-out infinite; }
+    .gift-box { cursor: pointer; transition: transform 0.2s; }
+    .gift-box:hover { transform: scale(1.08); }
+    .gift-box:active { transform: scale(0.95); }
+    .fade-in { animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity:1; }
+      100% { transform: translateY(400px) rotate(720deg); opacity:0; }
+    }
+    .confetti-piece { position: absolute; width: 10px; height: 10px; border-radius: 2px; animation: confettiFall 2.5s ease-out forwards; pointer-events: none; }
+    .next-btn {
+      background: #87CEFA;
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 40px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .next-btn:hover { background: #6DBDE8; transform: scale(1.04); }
+    .next-btn:active { transform: scale(0.97); }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto" style="background:#F8F8FF;">
+  <div id="app" class="w-full h-full"><!-- SECTION 1: Welcome -->
+   <section id="section1" class="fade-in" style="min-height:100%; display:flex; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h1 id="main-heading" class="font-baloo" style="font-size:46px; font-weight:800; color:#FF69B4; text-transform:uppercase; letter-spacing:3px; margin-bottom:32px; line-height:1.2;">HAPPY BIRTHDAY MY GIRL</h1><!-- Birthday Illustration: 3 animals + cake -->
+     <div class="float-anim" style="margin:0 auto 48px; max-width:500px;">
+      <svg viewbox="0 0 500 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Background confetti dots --> <circle cx="50" cy="40" r="5" fill="#FFD700" opacity="0.6" /> <circle cx="450" cy="50" r="4" fill="#FF69B4" opacity="0.5" /> <circle cx="120" cy="20" r="3" fill="#87CEFA" opacity="0.7" /> <circle cx="380" cy="30" r="6" fill="#A3D977" opacity="0.5" /> <circle cx="250" cy="15" r="4" fill="#FFB6C1" opacity="0.6" /> <circle cx="80" cy="80" r="3" fill="#DDA0DD" opacity="0.5" /> <circle cx="420" cy="90" r="5" fill="#FFD700" opacity="0.4" /> <!-- Present box left --> <rect x="70" y="250" width="65" height="55" rx="5" fill="#A3D977" /> <rect x="70" y="240" width="65" height="18" rx="4" fill="#7EC860" /> <rect x="98" y="240" width="10" height="65" fill="#FFD700" /> <rect x="70" y="255" width="65" height="8" fill="#FFD700" /> <!-- Bow --> <circle cx="103" cy="240" r="8" fill="#FF69B4" /> <circle cx="95" cy="235" r="5" fill="#FFB6C1" /> <circle cx="111" cy="235" r="5" fill="#FFB6C1" /> <!-- Present box right --> <rect x="365" y="255" width="60" height="50" rx="5" fill="#87CEFA" /> <rect x="365" y="245" width="60" height="16" rx="4" fill="#6DBDE8" /> <rect x="391" y="245" width="8" height="60" fill="#FFD700" /> <rect x="365" y="260" width="60" height="7" fill="#FFD700" /> <circle cx="395" cy="245" r="7" fill="#FF69B4" /> <circle cx="388" cy="240" r="4.5" fill="#FFB6C1" /> <circle cx="402" cy="240" r="4.5" fill="#FFB6C1" /> <!-- Cake --> <rect x="185" y="210" width="130" height="95" rx="12" fill="#FFB6C1" /> <rect x="175" y="195" width="150" height="25" rx="8" fill="#FF69B4" /> <!-- Cake frosting drips --> <ellipse cx="200" cy="220" rx="8" ry="12" fill="#FF69B4" /> <ellipse cx="230" cy="222" rx="6" ry="10" fill="#FF69B4" /> <ellipse cx="260" cy="218" rx="7" ry="13" fill="#FF69B4" /> <ellipse cx="290" cy="221" rx="6" ry="11" fill="#FF69B4" /> <!-- Cake layer line --> <rect x="185" y="260" width="130" height="4" fill="#E8929E" rx="2" /> <!-- Candles --> <rect x="220" y="165" width="6" height="35" rx="2" fill="#87CEFA" /> <rect x="245" y="155" width="6" height="45" rx="2" fill="#A3D977" /> <rect x="270" y="168" width="6" height="32" rx="2" fill="#FFD700" /> <!-- Flames --> <ellipse cx="223" cy="160" rx="5" ry="8" fill="#FFD700" /> <ellipse cx="223" cy="158" rx="3" ry="5" fill="#FFA500" /> <ellipse cx="248" cy="150" rx="5" ry="8" fill="#FFD700" /> <ellipse cx="248" cy="148" rx="3" ry="5" fill="#FFA500" /> <ellipse cx="273" cy="163" rx="5" ry="8" fill="#FFD700" /> <ellipse cx="273" cy="161" rx="3" ry="5" fill="#FFA500" /> <!-- Bear (left) --> <ellipse cx="130" cy="215" rx="38" ry="42" fill="#D2A679" /> <ellipse cx="130" cy="200" rx="32" ry="30" fill="#D2A679" /> <!-- Bear ears --> <circle cx="105" cy="178" r="12" fill="#D2A679" /> <circle cx="105" cy="178" r="7" fill="#C4956A" /> <circle cx="155" cy="178" r="12" fill="#D2A679" /> <circle cx="155" cy="178" r="7" fill="#C4956A" /> <!-- Bear face --> <ellipse cx="130" cy="205" rx="18" ry="14" fill="#E8C9A0" /> <circle cx="120" cy="195" r="4" fill="#333" /> <circle cx="140" cy="195" r="4" fill="#333" /> <circle cx="121" cy="193" r="1.5" fill="#fff" /> <circle cx="141" cy="193" r="1.5" fill="#fff" /> <ellipse cx="130" cy="203" rx="5" ry="3.5" fill="#333" /> <path d="M124 210 Q130 216 136 210" stroke="#C4956A" stroke-width="2" fill="none" /> <!-- Bear blush --> <ellipse cx="112" cy="205" rx="7" ry="4" fill="#FFB6C1" opacity="0.5" /> <ellipse cx="148" cy="205" rx="7" ry="4" fill="#FFB6C1" opacity="0.5" /> <!-- Bear arms --> <ellipse cx="100" cy="235" rx="12" ry="8" fill="#D2A679" transform="rotate(-20 100 235)" /> <ellipse cx="160" cy="232" rx="12" ry="8" fill="#D2A679" transform="rotate(15 160 232)" /> <!-- Bear party hat --> <polygon points="130,165 115,185 145,185" fill="#87CEFA" /> <circle cx="130" cy="163" r="5" fill="#FFD700" /> <rect x="115" y="183" width="30" height="4" rx="2" fill="#FF69B4" /> <!-- Bunny (center back) --> <ellipse cx="250" cy="145" rx="22" ry="25" fill="#F5F5F5" /> <!-- Bunny ears --> <ellipse cx="238" cy="100" rx="8" ry="28" fill="#F5F5F5" /> <ellipse cx="238" cy="100" rx="5" ry="22" fill="#FFB6C1" /> <ellipse cx="262" cy="100" rx="8" ry="28" fill="#F5F5F5" /> <ellipse cx="262" cy="100" rx="5" ry="22" fill="#FFB6C1" /> <!-- Bunny face --> <circle cx="242" cy="140" r="3" fill="#333" /> <circle cx="258" cy="140" r="3" fill="#333" /> <circle cx="243" cy="138.5" r="1" fill="#fff" /> <circle cx="259" cy="138.5" r="1" fill="#fff" /> <ellipse cx="250" cy="148" rx="3.5" ry="2.5" fill="#FFB6C1" /> <path d="M245 152 Q250 156 255 152" stroke="#ccc" stroke-width="1.5" fill="none" /> <!-- Bunny blush --> <ellipse cx="235" cy="148" rx="5" ry="3" fill="#FFB6C1" opacity="0.4" /> <ellipse cx="265" cy="148" rx="5" ry="3" fill="#FFB6C1" opacity="0.4" /> <!-- Cat (right) --> <ellipse cx="370" cy="218" rx="35" ry="38" fill="#F5DEB3" /> <ellipse cx="370" cy="202" rx="30" ry="28" fill="#F5DEB3" /> <!-- Cat ears --> <polygon points="345,178 340,155 358,175" fill="#F5DEB3" /> <polygon points="347,176 343,160 356,174" fill="#FFB6C1" /> <polygon points="395,178 400,155 382,175" fill="#F5DEB3" /> <polygon points="393,176 397,160 384,174" fill="#FFB6C1" /> <!-- Cat face --> <circle cx="358" cy="197" r="4" fill="#333" /> <circle cx="382" cy="197" r="4" fill="#333" /> <circle cx="359" cy="195.5" r="1.5" fill="#fff" /> <circle cx="383" cy="195.5" r="1.5" fill="#fff" /> <ellipse cx="370" cy="206" rx="4" ry="3" fill="#FFB6C1" /> <!-- Cat whiskers --> <line x1="340" y1="203" x2="358" y2="206" stroke="#ccc" stroke-width="1" /> <line x1="340" y1="208" x2="358" y2="208" stroke="#ccc" stroke-width="1" /> <line x1="382" y1="206" x2="400" y2="203" stroke="#ccc" stroke-width="1" /> <line x1="382" y1="208" x2="400" y2="208" stroke="#ccc" stroke-width="1" /> <path d="M364 210 Q370 215 376 210" stroke="#C4956A" stroke-width="1.5" fill="none" /> <!-- Cat blush --> <ellipse cx="352" cy="208" rx="6" ry="3.5" fill="#FFB6C1" opacity="0.4" /> <ellipse cx="388" cy="208" rx="6" ry="3.5" fill="#FFB6C1" opacity="0.4" /> <!-- Cat party hat --> <polygon points="370,168 358,188 382,188" fill="#FFD700" /> <circle cx="370" cy="166" r="4" fill="#FF69B4" /> <rect x="358" y="186" width="24" height="3.5" rx="1.5" fill="#87CEFA" /> <!-- Floor / table line --> <ellipse cx="250" cy="308" rx="220" ry="12" fill="#E8E0F0" opacity="0.5" />
+      </svg>
+     </div>
+     <div style="display:flex; justify-content:flex-end;"><button class="next-btn" onclick="goToSection(2)">NEXT</button>
+     </div>
     </div>
-
-    <!-- Gift Modal -->
-    <div id="giftModal" class="modal">
-        <div class="modal-content">
-            <div id="giftEmoji" style="font-size: 80px; margin-bottom: 20px;"></div>
-            <div id="giftPhoto" class="photo-container" style="display: none;"></div>
-            <h2 id="giftTitle" style="color: #FF69B4; font-size: 28px; margin: 20px 0;"></h2>
-            <p id="giftText" style="font-size: 18px; line-height: 1.6; color: #333;"></p>
-            <button class="btn" onclick="closeGift()" style="margin-top: 30px;">NEXT GIFT</button>
-        </div>
+   </section><!-- SECTION 2: Surprise Prompt -->
+   <section id="section2" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h1 id="surprise-heading" class="font-baloo" style="font-size:36px; font-weight:700; color:#1E90FF; letter-spacing:2px; margin-bottom:48px; line-height:1.3;">Are you ready for surprise?</h1><!-- Cute bear blushing -->
+     <div class="wiggle-anim" style="margin:0 auto 48px; max-width:300px;">
+      <svg viewbox="0 0 300 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Body --> <ellipse cx="150" cy="220" rx="75" ry="85" fill="#D2A679" /> <!-- Belly --> <ellipse cx="150" cy="235" rx="50" ry="55" fill="#E8C9A0" /> <!-- Head --> <ellipse cx="150" cy="130" rx="65" ry="60" fill="#D2A679" /> <!-- Ears --> <circle cx="95" cy="85" r="22" fill="#D2A679" /> <circle cx="95" cy="85" r="13" fill="#C4956A" /> <circle cx="205" cy="85" r="22" fill="#D2A679" /> <circle cx="205" cy="85" r="13" fill="#C4956A" /> <!-- Face --> <ellipse cx="150" cy="145" rx="35" ry="25" fill="#E8C9A0" /> <!-- Eyes --> <circle cx="128" cy="125" r="8" fill="#333" /> <circle cx="172" cy="125" r="8" fill="#333" /> <circle cx="130" cy="122" r="3" fill="#fff" /> <circle cx="174" cy="122" r="3" fill="#fff" /> <!-- Nose --> <ellipse cx="150" cy="140" rx="8" ry="6" fill="#333" /> <!-- Mouth --> <path d="M138 152 Q150 164 162 152" stroke="#C4956A" stroke-width="3" fill="none" /> <!-- Blush --> <ellipse cx="115" cy="145" rx="14" ry="8" fill="#FFB6C1" opacity="0.6" /> <ellipse cx="185" cy="145" rx="14" ry="8" fill="#FFB6C1" opacity="0.6" /> <!-- Arms --> <ellipse cx="85" cy="210" rx="22" ry="14" fill="#D2A679" transform="rotate(-15 85 210)" /> <ellipse cx="215" cy="210" rx="22" ry="14" fill="#D2A679" transform="rotate(15 215 210)" /> <!-- Feet --> <ellipse cx="115" cy="295" rx="25" ry="15" fill="#C4956A" /> <ellipse cx="185" cy="295" rx="25" ry="15" fill="#C4956A" /> <!-- Question marks floating --> <text x="60" y="60" font-family="Baloo 2, cursive" font-size="28" fill="#FFD700" opacity="0.7">
+        ?
+       </text> <text x="230" y="50" font-family="Baloo 2, cursive" font-size="22" fill="#FF69B4" opacity="0.6">
+        ?
+       </text> <text x="40" y="140" font-family="Baloo 2, cursive" font-size="20" fill="#87CEFA" opacity="0.5">
+        ?
+       </text>
+      </svg>
+     </div>
+     <div style="display:flex; justify-content:flex-end; gap:16px;"><button class="next-btn" style="background:#A3D977;" onclick="goToSection(3)">YES!</button> <button class="next-btn" style="background:#FF69B4;" onclick="goToSection(3.5)">NO</button>
+     </div>
     </div>
+   </section><!-- SECTION 3: How Dare You -->
+   <section id="section3" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h1 class="font-baloo" style="font-size:44px; font-weight:800; color:#1E90FF; text-transform:uppercase; letter-spacing:3px; margin-bottom:48px;">HOW DARE YOU!</h1><!-- Angry bear with chainsaw -->
+     <div class="wiggle-anim" style="margin:0 auto 48px; max-width:340px;">
+      <svg viewbox="0 0 340 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Body --> <ellipse cx="170" cy="240" rx="75" ry="85" fill="#D2A679" /> <ellipse cx="170" cy="255" rx="50" ry="55" fill="#E8C9A0" /> <!-- Head --> <ellipse cx="170" cy="140" rx="65" ry="60" fill="#D2A679" /> <!-- Ears --> <circle cx="115" cy="95" r="22" fill="#D2A679" /> <circle cx="115" cy="95" r="13" fill="#C4956A" /> <circle cx="225" cy="95" r="22" fill="#D2A679" /> <circle cx="225" cy="95" r="13" fill="#C4956A" /> <!-- Face --> <ellipse cx="170" cy="155" rx="35" ry="25" fill="#E8C9A0" /> <!-- Angry eyes --> <line x1="140" y1="120" x2="158" y2="128" stroke="#333" stroke-width="4" stroke-linecap="round" /> <line x1="200" y1="120" x2="182" y2="128" stroke="#333" stroke-width="4" stroke-linecap="round" /> <circle cx="148" cy="132" r="6" fill="#333" /> <circle cx="192" cy="132" r="6" fill="#333" /> <circle cx="149.5" cy="130.5" r="2" fill="#fff" /> <circle cx="193.5" cy="130.5" r="2" fill="#fff" /> <!-- Nose --> <ellipse cx="170" cy="148" rx="8" ry="6" fill="#333" /> <!-- Angry mouth --> <path d="M152 162 L170 155 L188 162" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round" /> <!-- Red anger marks --> <text x="120" y="100" font-size="18" fill="#FF4444">
+        💢
+       </text> <text x="210" y="95" font-size="14" fill="#FF4444">
+        💢
+       </text> <!-- Arms holding chainsaw --> <ellipse cx="100" cy="220" rx="22" ry="14" fill="#D2A679" transform="rotate(-30 100 220)" /> <ellipse cx="240" cy="215" rx="22" ry="14" fill="#D2A679" transform="rotate(20 240 215)" /> <!-- Chainsaw --> <rect x="240" y="200" width="80" height="22" rx="4" fill="#FF6347" /> <rect x="240" y="205" width="80" height="12" rx="3" fill="#FF4500" /> <rect x="315" y="198" width="15" height="26" rx="7" fill="#888" /> <!-- Chainsaw teeth --> <path d="M245 222 L255 228 L265 222 L275 228 L285 222 L295 228 L305 222 L315 228" stroke="#666" stroke-width="2" fill="none" /> <!-- Feet --> <ellipse cx="135" cy="315" rx="25" ry="15" fill="#C4956A" /> <ellipse cx="205" cy="315" rx="25" ry="15" fill="#C4956A" />
+      </svg>
+     </div>
+     <div style="display:flex; justify-content:center;"><button class="next-btn" style="background:#1E90FF;" onclick="goToSection(2)">TRY AGAIN</button>
+     </div>
+    </div>
+   </section><!-- SECTION 4: Cute Character -->
+   <section id="section4" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <!-- Cute bunny with flower -->
+     <div class="float-anim" style="margin:48px auto; max-width:300px;">
+      <svg viewbox="0 0 300 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Body --> <ellipse cx="150" cy="240" rx="70" ry="85" fill="#F5F5F5" /> <!-- Belly --> <ellipse cx="150" cy="255" rx="45" ry="55" fill="#FFE4E1" /> <!-- Head --> <ellipse cx="150" cy="130" rx="65" ry="65" fill="#F5F5F5" /> <!-- Ears --> <ellipse cx="100" cy="60" rx="20" ry="50" fill="#F5F5F5" /> <ellipse cx="100" cy="60" rx="12" ry="40" fill="#FFB6C1" /> <ellipse cx="200" cy="60" rx="20" ry="50" fill="#F5F5F5" /> <ellipse cx="200" cy="60" rx="12" ry="40" fill="#FFB6C1" /> <!-- Face --> <circle cx="130" cy="115" r="10" fill="#333" /> <circle cx="170" cy="115" r="10" fill="#333" /> <circle cx="132" cy="112" r="4" fill="#fff" /> <circle cx="172" cy="112" r="4" fill="#fff" /> <ellipse cx="150" cy="138" rx="6" ry="5" fill="#FFB6C1" /> <path d="M142 150 Q150 160 158 150" stroke="#ddd" stroke-width="2" fill="none" /> <!-- Blush --> <ellipse cx="110" cy="130" rx="12" ry="6" fill="#FFB6C1" opacity="0.5" /> <ellipse cx="190" cy="130" rx="12" ry="6" fill="#FFB6C1" opacity="0.5" /> <!-- Arms holding flower --> <ellipse cx="85" cy="220" rx="25" ry="15" fill="#F5F5F5" transform="rotate(-25 85 220)" /> <ellipse cx="215" cy="220" rx="25" ry="15" fill="#F5F5F5" transform="rotate(25 215 220)" /> <!-- Feet --> <ellipse cx="120" cy="315" rx="28" ry="18" fill="#FFD700" /> <ellipse cx="180" cy="315" rx="28" ry="18" fill="#FFD700" /> <!-- Flower stem --> <line x1="150" y1="80" x2="150" y2="150" stroke="#7EC860" stroke-width="6" stroke-linecap="round" /> <circle cx="158" cy="130" r="5" fill="#7EC860" /> <circle cx="142" cy="135" r="5" fill="#7EC860" /> <!-- Flower petals --> <ellipse cx="150" cy="40" rx="20" ry="25" fill="#FF69B4" /> <ellipse cx="180" cy="55" rx="20" ry="25" fill="#FF69B4" transform="rotate(60 180 55)" /> <ellipse cx="180" cy="95" rx="20" ry="25" fill="#FF69B4" transform="rotate(120 180 95)" /> <ellipse cx="150" cy="110" rx="20" ry="25" fill="#FF69B4" transform="rotate(180 150 110)" /> <ellipse cx="120" cy="95" rx="20" ry="25" fill="#FF69B4" transform="rotate(240 120 95)" /> <ellipse cx="120" cy="55" rx="20" ry="25" fill="#FF69B4" transform="rotate(300 120 55)" /> <!-- Flower center --> <circle cx="150" cy="75" r="15" fill="#FFD700" /> <!-- Decorative stickers --> <text x="30" y="60" font-size="32" opacity="0.7">
+        💐
+       </text> <text x="260" y="80" font-size="28" opacity="0.6">
+        🌸
+       </text> <text x="40" y="280" font-size="24" opacity="0.5">
+        🌼
+       </text> <text x="270" y="260" font-size="26" opacity="0.6">
+        🌷
+       </text>
+      </svg>
+     </div>
+     <div style="display:flex; justify-content:center;"><button class="next-btn" onclick="goToSection(5)">NEXT</button>
+     </div>
+    </div>
+   </section><!-- SECTION 5: Love Message -->
+   <section id="section5" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <!-- Cute cat with bouquet -->
+     <div class="float-anim" style="margin:32px auto; max-width:280px;">
+      <svg viewbox="0 0 300 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Body --> <ellipse cx="150" cy="220" rx="65" ry="75" fill="#F5DEB3" /> <!-- Belly --> <ellipse cx="150" cy="235" rx="40" ry="45" fill="#FFEFD5" /> <!-- Head --> <ellipse cx="150" cy="120" rx="60" ry="55" fill="#F5DEB3" /> <!-- Ears --> <polygon points="115,70 105,40 125,75" fill="#F5DEB3" /> <polygon points="117,73 110,55 122,72" fill="#FFB6C1" /> <polygon points="185,70 195,40 175,75" fill="#F5DEB3" /> <polygon points="183,73 190,55 178,72" fill="#FFB6C1" /> <!-- Face --> <circle cx="130" cy="110" r="9" fill="#333" /> <circle cx="170" cy="110" r="9" fill="#333" /> <circle cx="132" cy="107" r="3.5" fill="#fff" /> <circle cx="172" cy="107" r="3.5" fill="#fff" /> <ellipse cx="150" cy="128" rx="7" ry="5" fill="#FFB6C1" /> <!-- Whiskers --> <line x1="100" y1="118" x2="115" y2="120" stroke="#ddd" stroke-width="1.5" /> <line x1="100" y1="125" x2="115" y2="125" stroke="#ddd" stroke-width="1.5" /> <line x1="200" y1="120" x2="185" y2="118" stroke="#ddd" stroke-width="1.5" /> <line x1="200" y1="125" x2="185" y2="125" stroke="#ddd" stroke-width="1.5" /> <!-- Mouth --> <path d="M140 135 Q150 142 160 135" stroke="#C4956A" stroke-width="1.5" fill="none" /> <!-- Blush --> <ellipse cx="110" cy="125" rx="10" ry="5" fill="#FFB6C1" opacity="0.4" /> <ellipse cx="190" cy="125" rx="10" ry="5" fill="#FFB6C1" opacity="0.4" /> <!-- Arms --> <ellipse cx="90" cy="210" rx="20" ry="12" fill="#F5DEB3" transform="rotate(-20 90 210)" /> <ellipse cx="210" cy="210" rx="20" ry="12" fill="#F5DEB3" transform="rotate(20 210 210)" /> <!-- Feet --> <ellipse cx="125" cy="290" rx="22" ry="14" fill="#E8C9A0" /> <ellipse cx="175" cy="290" rx="22" ry="14" fill="#E8C9A0" /> <!-- Bouquet --> <ellipse cx="140" cy="140" rx="35" ry="50" fill="#DDA0DD" /> <circle cx="130" cy="110" r="12" fill="#FF69B4" /> <circle cx="145" cy="105" r="12" fill="#FFB6C1" /> <circle cx="155" cy="115" r="12" fill="#FF69B4" /> <circle cx="140" cy="130" r="12" fill="#FFB6C1" /> <circle cx="150" cy="140" r="12" fill="#FF1493" /> <circle cx="135" cy="150" r="10" fill="#FFB6C1" /> <circle cx="155" cy="150" r="10" fill="#FF69B4" /> <!-- Bouquet ribbon --> <path d="M155 160 Q160 180 155 200" stroke="#87CEFA" stroke-width="8" fill="none" stroke-linecap="round" /> <!-- Decorative stickers --> <text x="40" y="100" font-size="28" opacity="0.6">
+        💕
+       </text> <text x="260" y="120" font-size="24" opacity="0.5">
+        💖
+       </text> <text x="50" y="260" font-size="32" opacity="0.7">
+        💝
+       </text> <text x="250" y="240" font-size="26" opacity="0.6">
+        💗
+       </text>
+      </svg>
+     </div>
+     <h2 id="love-message" class="font-baloo" style="font-size:28px; color:#FF69B4; font-weight:700; margin:32px 0; letter-spacing:1px;">I Love you the mostest.</h2>
+     <div style="display:flex; justify-content:center;"><button class="next-btn" onclick="goToSection(6)">NEXT</button>
+     </div>
+    </div>
+   </section><!-- SECTION 6: Photo Collage -->
+   <section id="section6" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div style="width:100%; padding:48px 32px; position:relative;">
+     <h1 class="font-baloo" style="text-align:center; font-size:40px; font-weight:800; color:#222; text-transform:uppercase; letter-spacing:2px; margin-bottom:32px;">memories</h1>
+     <div style="max-width:700px; margin:0 auto; position:relative; height:500px;">
+      <!-- Photo collage with overlapping images -->
+      <div style="position:absolute; left:20px; top:0; width:180px; height:200px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15); overflow:hidden; transform:rotate(-5deg);">
+       <svg viewbox="0 0 180 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:linear-gradient(135deg,#FFB6C1,#FFC0CB);">
+        <rect width="180" height="200" fill="url(#grad1)" /> <defs>
+         <lineargradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#FF69B4;stop-opacity:1" />
+         </lineargradient>
+        </defs> <text x="90" y="100" font-size="40" text-anchor="middle" dominant-baseline="middle" opacity="0.8">
+         🎂
+        </text>
+       </svg>
+      </div>
+      <div style="position:absolute; right:30px; top:40px; width:160px; height:180px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15); overflow:hidden; transform:rotate(8deg);">
+       <svg viewbox="0 0 160 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:linear-gradient(135deg,#87CEFA,#A3D977);">
+        <rect width="160" height="180" fill="url(#grad2)" /> <defs>
+         <lineargradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFB6C1;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#DDA0DD;stop-opacity:1" />
+         </lineargradient>
+        </defs> <text x="80" y="90" font-size="32" text-anchor="middle" dominant-baseline="middle" opacity="0.8">
+         🎉
+        </text>
+       </svg>
+      </div>
+      <div style="position:absolute; left:80px; bottom:80px; width:200px; height:160px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15); overflow:hidden; transform:rotate(-3deg); z-index:5;">
+       <svg viewbox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;background:linear-gradient(135deg,#FFEFD5,#FFE4E1);">
+        <rect width="200" height="160" fill="url(#grad3)" /> <defs>
+         <lineargradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#87CEFA;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+         </lineargradient>
+        </defs> <text x="100" y="80" font-size="36" text-anchor="middle" dominant-baseline="middle" opacity="0.8">
+         👯
+        </text>
+       </svg>
+      </div><!-- Decorative stickers -->
+      <div style="position:absolute; left:30px; bottom:120px; font-size:36; opacity:0.6; animation:float 3s ease-in-out infinite;">
+       🌸
+      </div>
+      <div style="position:absolute; right:20px; bottom:200px; font-size:32; opacity:0.5; animation:wiggle 2s ease-in-out infinite;">
+       💐
+      </div>
+      <div style="position:absolute; left:200px; top:150px; font-size:28; opacity:0.4;">
+       🌼
+      </div>
+      <div style="position:absolute; right:80px; bottom:30px; font-size:34; opacity:0.7;">
+       ❤️
+      </div>
+      <div style="position:absolute; left:100px; top:20px; font-size:24; opacity:0.5;">
+       💕
+      </div>
+     </div>
+     <div style="text-align:center; margin-top:48px;"><button class="next-btn" onclick="goToSection(7)">NEXT</button>
+     </div>
+    </div>
+   </section><!-- SECTION 7: Countdown -->
+   <section id="section7" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h2 class="font-baloo" style="font-size:28px; color:#222; font-weight:600; letter-spacing:2px; margin-bottom:32px;">Counting down to</h2>
+     <div id="countdown-display" style="font-family:'Courier New',monospace; font-size:64px; font-weight:bold; color:#1E90FF; letter-spacing:8px; margin:32px 0; text-transform:uppercase;">
+      00:00:00:00
+     </div>
+     <h3 class="font-baloo" style="font-size:22px; font-weight:700; letter-spacing:2px; margin-bottom:32px;"><span style="color:#1E90FF;" id="countdown-name">HETVI'S</span> <span style="color:#222;">SPECIAL DAY</span></h3><!-- Party animals illustration bottom right -->
+     <div style="margin-top:48px; text-align:right;">
+      <svg viewbox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="width:200px;height:auto;"><!-- Party hat decorations --> <polygon points="80,30 70,60 90,60" fill="#87CEFA" /> <polygon points="140,20 130,55 150,55" fill="#FF69B4" /> <polygon points="200,35 190,65 210,65" fill="#A3D977" /> <!-- Party streamers --> <path d="M80 60 Q70 100 85 140" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round" /> <path d="M140 55 Q130 110 150 160" stroke="#87CEFA" stroke-width="3" fill="none" stroke-linecap="round" /> <path d="M200 65 Q210 110 190 150" stroke="#FF69B4" stroke-width="3" fill="none" stroke-linecap="round" /> <!-- Confetti circles --> <circle cx="60" cy="90" r="3" fill="#FFD700" opacity="0.8" /> <circle cx="110" cy="100" r="4" fill="#FF69B4" opacity="0.7" /> <circle cx="170" cy="85" r="3" fill="#87CEFA" opacity="0.8" /> <circle cx="230" cy="110" r="4" fill="#A3D977" opacity="0.6" /> <!-- Balloon strings --> <line x1="60" y1="40" x2="60" y2="80" stroke="#ddd" stroke-width="1.5" /> <line x1="130" y1="35" x2="130" y2="75" stroke="#ddd" stroke-width="1.5" /> <line x1="210" y1="45" x2="210" y2="85" stroke="#ddd" stroke-width="1.5" /> <!-- Balloons --> <circle cx="60" cy="30" r="12" fill="#FFD700" opacity="0.8" /> <circle cx="130" cy="25" r="13" fill="#FF69B4" opacity="0.8" /> <circle cx="210" cy="35" r="12" fill="#87CEFA" opacity="0.8" />
+      </svg>
+     </div>
+     <div style="display:flex; justify-content:center; margin-top:32px;"><button class="next-btn" onclick="goToSection(8)">NEXT</button>
+     </div>
+    </div>
+   </section><!-- SECTION 8: Virtual Cake -->
+   <section id="section8" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div style="width:100%; padding:48px 32px;">
+     <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; max-width:900px; margin:0 auto;">
+      <!-- Left: Text -->
+      <div style="background:#222222; padding:40px; border-radius:16px; color:#fff; text-align:left;">
+       <h2 id="cake-message" class="font-baloo" style="font-size:28px; font-weight:700; margin-bottom:16px; letter-spacing:1px;">Here's your virtual cake it's calorie-free but full of love.</h2>
+       <p class="font-nunito" style="font-size:18px; line-height:1.6; margin-top:16px;">Blow your candle and make your wish</p><button class="next-btn" style="margin-top:24px; background:#87CEFA;" onclick="blowCandle()">BLOW</button>
+      </div><!-- Right: Cake illustration -->
+      <div style="display:flex; justify-content:center;">
+       <svg viewbox="0 0 280 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-width:260px;"><!-- Cake base layer 3 --> <rect x="40" y="240" width="200" height="80" rx="8" fill="#D2691E" /> <ellipse cx="140" cy="240" rx="110" ry="20" fill="#CD853F" /> <!-- Cake base layer 2 --> <rect x="50" y="150" width="180" height="95" rx="8" fill="#8B4513" /> <ellipse cx="140" cy="150" rx="95" ry="22" fill="#A0522D" /> <!-- Cake base layer 1 (top) --> <rect x="60" y="70" width="160" height="90" rx="8" fill="#D2691E" /> <ellipse cx="140" cy="70" rx="85" ry="20" fill="#CD853F" /> <!-- Frosting swirls --> <path d="M80 100 Q140 80 200 100" stroke="#FFB6C1" stroke-width="4" fill="none" stroke-linecap="round" /> <path d="M70 160 Q140 140 210 160" stroke="#FFB6C1" stroke-width="3" fill="none" stroke-linecap="round" /> <path d="M60 240 Q140 220 220 240" stroke="#FFB6C1" stroke-width="4" fill="none" stroke-linecap="round" /> <!-- Candles --> <rect x="110" y="20" width="8" height="50" rx="2" fill="#FFD700" /> <rect x="140" y="10" width="8" height="60" rx="2" fill="#87CEFA" /> <rect x="170" y="25" width="8" height="45" rx="2" fill="#A3D977" /> <!-- Flames (will animate out on blow) --> <g id="flames">
+         <ellipse cx="114" cy="15" rx="7" ry="12" fill="#FFD700" />
+         <ellipse cx="114" cy="12" rx="4" ry="8" fill="#FFA500" />
+         <ellipse cx="144" cy="5" rx="7" ry="14" fill="#FFD700" />
+         <ellipse cx="144" cy="2" rx="4" ry="9" fill="#FFA500" />
+         <ellipse cx="174" cy="18" rx="7" ry="12" fill="#FFD700" />
+         <ellipse cx="174" cy="15" rx="4" ry="8" fill="#FFA500" />
+        </g> <!-- Cake plate --> <ellipse cx="140" cy="330" rx="130" ry="25" fill="#F5DEB3" /> <ellipse cx="140" cy="328" rx="130" ry="20" fill="#FFEFD5" /> <!-- Decorative cherries --> <circle cx="95" cy="80" r="6" fill="#FF1493" /> <circle cx="185" cy="100" r="6" fill="#FF1493" /> <circle cx="120" cy="170" r="5" fill="#FF1493" /> <!-- Sprinkles --> <circle cx="85" cy="95" r="3" fill="#FFD700" opacity="0.8" /> <circle cx="195" cy="110" r="3" fill="#87CEFA" opacity="0.7" /> <circle cx="100" cy="200" r="2.5" fill="#A3D977" opacity="0.8" /> <circle cx="180" cy="190" r="2.5" fill="#FF69B4" opacity="0.7" />
+       </svg>
+      </div>
+     </div><!-- Responsive adjustment for small screens -->
+     <style>
+      @media (max-width: 768px) {
+        [style*="grid-template-columns:1fr 1fr"] {
+          grid-template-columns: 1fr !important;
+        }
+      }
+     </style>
+    </div>
+   </section><!-- SECTION 9: Gift Grid -->
+   <section id="section9" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h1 id="gift-heading" class="font-baloo" style="font-size:42px; font-weight:800; color:#222; text-transform:uppercase; letter-spacing:3px; margin-bottom:32px;">GIFT FOR YOU</h1><!-- 2x2 Gift Grid -->
+     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px; max-width:500px; margin:0 auto 24px;">
+      <div class="gift-box" onclick="openGift(this, 0)">
+       <svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><rect x="15" y="60" width="130" height="90" rx="8" fill="#A3D977" /> <rect x="15" y="50" width="130" height="22" rx="6" fill="#7EC860" /> <rect x="72" y="50" width="16" height="100" fill="#FFD700" /> <rect x="15" y="80" width="130" height="12" fill="#FFD700" /> <!-- Bow --> <ellipse cx="80" cy="48" rx="18" ry="14" fill="#9B59B6" /> <ellipse cx="68" cy="40" rx="12" ry="9" fill="#B370CF" /> <ellipse cx="92" cy="40" rx="12" ry="9" fill="#B370CF" /> <circle cx="80" cy="48" r="6" fill="#8E44AD" />
+       </svg>
+      </div>
+      <div class="gift-box" onclick="openGift(this, 1)">
+       <svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><rect x="15" y="60" width="130" height="90" rx="8" fill="#87CEFA" /> <rect x="15" y="50" width="130" height="22" rx="6" fill="#6DBDE8" /> <rect x="72" y="50" width="16" height="100" fill="#FFD700" /> <rect x="15" y="80" width="130" height="12" fill="#FFD700" /> <ellipse cx="80" cy="48" rx="18" ry="14" fill="#9B59B6" /> <ellipse cx="68" cy="40" rx="12" ry="9" fill="#B370CF" /> <ellipse cx="92" cy="40" rx="12" ry="9" fill="#B370CF" /> <circle cx="80" cy="48" r="6" fill="#8E44AD" />
+       </svg>
+      </div>
+      <div class="gift-box" onclick="openGift(this, 2)">
+       <svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><rect x="15" y="60" width="130" height="90" rx="8" fill="#FFB6C1" /> <rect x="15" y="50" width="130" height="22" rx="6" fill="#F0A0B0" /> <rect x="72" y="50" width="16" height="100" fill="#FFD700" /> <rect x="15" y="80" width="130" height="12" fill="#FFD700" /> <ellipse cx="80" cy="48" rx="18" ry="14" fill="#9B59B6" /> <ellipse cx="68" cy="40" rx="12" ry="9" fill="#B370CF" /> <ellipse cx="92" cy="40" rx="12" ry="9" fill="#B370CF" /> <circle cx="80" cy="48" r="6" fill="#8E44AD" />
+       </svg>
+      </div>
+      <div class="gift-box" onclick="openGift(this, 3)">
+       <svg viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><rect x="15" y="60" width="130" height="90" rx="8" fill="#FFD700" /> <rect x="15" y="50" width="130" height="22" rx="6" fill="#E8C400" /> <rect x="72" y="50" width="16" height="100" fill="#FF69B4" /> <rect x="15" y="80" width="130" height="12" fill="#FF69B4" /> <ellipse cx="80" cy="48" rx="18" ry="14" fill="#9B59B6" /> <ellipse cx="68" cy="40" rx="12" ry="9" fill="#B370CF" /> <ellipse cx="92" cy="40" rx="12" ry="9" fill="#B370CF" /> <circle cx="80" cy="48" r="6" fill="#8E44AD" />
+       </svg>
+      </div>
+     </div>
+     <p class="font-nunito" style="font-size:16px; color:#999; text-transform:uppercase; letter-spacing:2px;">CLICK ANY GIFT TO OPEN</p>
+    </div>
+   </section><!-- SECTION 9.5: Gift Reveal -->
+   <section id="section9.5" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <div style="margin-bottom:48px;">
+      <div style="font-size:80px; margin-bottom:24px;" id="gift-emoji">
+       🎉
+      </div>
+      <div id="gift-image-container" style="margin-bottom:32px; display:none;">
+       <img id="gift-image" src="" alt="Gift image" style="max-width:400px; width:100%; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15);" loading="lazy" onerror="console.error('Image failed to load:', this.src); this.style.display='none';">
+      </div>
+      <h1 id="gift-message" class="font-baloo" style="font-size:40px; font-weight:800; color:#FF69B4; text-transform:uppercase; letter-spacing:2px; margin-bottom:16px;">Happy Birthday!</h1>
+      <p id="gift-detail" class="font-nunito" style="font-size:20px; color:#555; line-height:1.8; margin-bottom:32px;">Wishing you an amazing year ahead!</p>
+     </div>
+     <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;"><button class="next-btn" onclick="goToSection(9)" style="display:none;">BACK</button> <button class="next-btn" style="background:#A3D977; display:none;" onclick="goToSection(10)">CONTINUE</button>
+     </div>
+    </div>
+   </section><!-- SECTION 10: Final Message -->
+   <section id="section10" class="fade-in" style="min-height:100%; display:none; align-items:center; justify-content:center;">
+    <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
+     <h1 id="outro-heading" class="font-baloo" style="font-size:48px; font-weight:800; color:#FF69B4; text-transform:uppercase; letter-spacing:3px; margin-bottom:48px;">One More Thing</h1>
+     <div class="float-anim" style="margin:32px auto; max-width:280px;">
+      <svg viewbox="0 0 280 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;"><!-- Cute character holding heart --> <!-- Body --> <ellipse cx="140" cy="220" rx="60" ry="70" fill="#FFE4E1" /> <!-- Belly --> <ellipse cx="140" cy="235" rx="40" ry="45" fill="#FFD4D8" /> <!-- Head --> <ellipse cx="140" cy="120" rx="55" ry="55" fill="#FFE4E1" /> <!-- Ears --> <circle cx="100" cy="75" r="18" fill="#FFE4E1" /> <circle cx="100" cy="75" r="11" fill="#FFB6C1" /> <circle cx="180" cy="75" r="18" fill="#FFE4E1" /> <circle cx="180" cy="75" r="11" fill="#FFB6C1" /> <!-- Face --> <circle cx="125" cy="110" r="8" fill="#333" /> <circle cx="155" cy="110" r="8" fill="#333" /> <circle cx="127" cy="107" r="3" fill="#fff" /> <circle cx="157" cy="107" r="3" fill="#fff" /> <ellipse cx="140" cy="128" rx="6" ry="5" fill="#FFB6C1" /> <path d="M134 138 Q140 145 146 138" stroke="#ddd" stroke-width="1.5" fill="none" /> <!-- Blush --> <ellipse cx="108" cy="125" rx="12" ry="6" fill="#FFB6C1" opacity="0.5" /> <ellipse cx="172" cy="125" rx="12" ry="6" fill="#FFB6C1" opacity="0.5" /> <!-- Arms reaching for heart --> <ellipse cx="85" cy="200" rx="20" ry="12" fill="#FFE4E1" transform="rotate(-35 85 200)" /> <ellipse cx="195" cy="200" rx="20" ry="12" fill="#FFE4E1" transform="rotate(35 195 200)" /> <!-- Legs --> <ellipse cx="120" cy="290" rx="20" ry="15" fill="#FFB6C1" /> <ellipse cx="160" cy="290" rx="20" ry="15" fill="#FFB6C1" /> <!-- Large heart in front --> <path d="M140 140 C140 130, 155 120, 165 130 C175 140, 165 155, 140 175 C115 155, 105 140, 115 130 C125 120, 140 130, 140 140 Z" fill="#FF1493" /> <!-- Heart shine --> <ellipse cx="145" cy="145" rx="6" ry="8" fill="#FFB6C1" opacity="0.6" /> <!-- Stars around --> <text x="40" y="80" font-size="28" opacity="0.8">
+        ✨
+       </text> <text x="220" y="100" font-size="24" opacity="0.7">
+        ✨
+       </text> <text x="50" y="240" font-size="20" opacity="0.6">
+        💫
+       </text> <text x="240" y="200" font-size="22" opacity="0.7">
+        💫
+       </text>
+      </svg>
+     </div>
+     <h2 id="outro-message" class="font-baloo" style="font-size:32px; color:#1E90FF; font-weight:700; margin:32px 0; letter-spacing:1.5px; line-height:1.6;">I Love you the mostest.</h2>
+     <p class="font-nunito" style="font-size:20px; color:#555; margin:24px 0; font-style:italic;">Thank you for being such an amazing person. Keep smiling! 🌟</p>
+     <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:48px;"><button class="next-btn" onclick="goToSection(1)">REPLAY</button>
+     </div>
+    </div>
+   </section><!-- Confetti container -->
+   <div id="confetti-container" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;"></div>
+  </div>
+  <script>
+    const defaultConfig = {
+      birthday_name: "HETVI'S",
+      virtual_cake_text: "Here's your virtual cake it's calorie-free but full of love.",
+      countdown_date: "2025-03-15",
+      love_message: "I Love you the mostest.",
+      outro_message: "I Love you the mostest.",
+      background_color: "#F8F8FF",
+      heading_color: "#FF69B4",
+      accent_color: "#1E90FF",
+      text_color: "#222222",
+      button_color: "#87CEFA",
+      font_family: "Baloo 2"
+    };
 
-    <script>
-        let currentSection = 1;
-        const gifts = [
-            {
-                emoji: "🎂",
-                title: "A Year of Joy!",
-                text: "Be happy and always stay healthy! Don't forget to eat on time 💕",
-                image: "images/photo1.jpg"
-            },
-            {
-                emoji: "🌟",
-                title: "You're a Star!",
-                text: "Keep shining bright! The world needs your light ✨",
-                image: "images/photo2.jpg"
-            },
-            {
-                emoji: "💝",
-                title: "Lots of Love!",
-                text: "Sending you all my love and warm hugs! Love you forever ❤️",
-                image: "images/photo3.jpg"
-            },
-            {
-                emoji: "🎉",
-                title: "Party Time!",
-                text: "Celebrate like there's no tomorrow! You're amazing! 🥳",
-                image: "images/photo4.jpg"
-            }
-        ];
+    let currentSection = 1;
+    let countdownInterval = null;
+    let openedGifts = new Set();
 
-        function nextSection(num) {
-            document.getElementById('sec' + currentSection).classList.remove('active');
-            currentSection = num;
-            document.getElementById('sec' + currentSection).classList.add('active');
+    const giftMessages = [
+      { emoji: "🎂", image: "\birthday-photos\images\photo1.jpg", title: "A Year of Joy!", detail: "Be happy and always stay healthy, Don't forget to eat on time even if you have no interest or in no mood. Take your meds on time if you are ill. I hope you will follow what i told you, I know you won't follow but I want you to take care of urself.Okay then carryy on with your other gifts heheeheheee."},
+      { emoji: "🌟", image: "\birthday-photos\images\photo2.jpg", title: "You're a Star!", detail: "Keep shining bright, the world needs your light! Even if the world doesn't need the light, I need it and I will everything that makes you bright. You are my princess, my highness, my queen, what not you are my everything. I shall do everything that is possible for you to make you happy and give you everything you wish for within my ranges and i wish to see you become what you wished for or dreamed to be. Even if you don't have any dreams but whereever you are, I will always wait to see you achieve or become. Remember you still have your idiot to support you and encourage you and wish to see you happy.All that I wish for is that you be happy. carry on baabee with ur gifts muahhhh." },
+      { emoji: "💝", image: "\birthday-photos\images\photo3.jpg", title: "Lots of Love!", detail: "Sending you all the love and warm hugs! Remember when we becane friends and How we have shared our journey which was very small I know that but it was very memorable moments and some sad memories too like going in separate ways. Even if we are separated, you are always the person who consitently appears in my mind in every single way. Don't you ever forget me orelse i will kill you which not possible we Know that too. My precious babby how are you doing?? I wanna see you , I wanns hug you and sleep in ur arms. I can't think of any words darling, what should I do. I remembered how we used to talk like about moving out ,living together , taking care of each other and lots of gossips where we used to laugh, cry, get angry hehe and many more. Thought to prepare hand craft surprise but what can I do , you won't be able to take or I can't go to your house. But one day definitly I would give you a surprise showing up and take you with me so wait for that day, maybe next year or few years later but that's definetly gonna happen. SO with this one last gift is there enjoy seeing that boieee darlinggg!!!"},
+      { emoji: "🎉", image: "\birthday-photos\images\photo4.jpg", title: "Party Time!", detail: "It's your special day — celebrate like there's no tomorrow! Yeah Iknow it won't be  like that but anyways I wanted to tell so I told. So how is it the surprises, did you read everyhting that I wrote. It took so much efforrt you know and for my preious lady i would go to great lengths. Somethings aren't expressed sometimes which is now I can't find any more words. I wanted to prepare something so that it might look different and I don't want to look lazy bff cuz last time it was not that much effort. I wanted too see you happy and that's all matters to me, so I thought of learning that videos things which you make but I thought again maybe I should try something different and more surprising. I don't know if you liked it or not. Anyways that's all for now wishing you many more returns of the day. remember to be happpy ,stay health and sleep more , take rest it won't eat you if you sleep.boie boieee taataa see you and most important thing I love you muahhhhh. " }
+    ];
+
+    function goToSection(num) {
+      // 3.5 maps to section 3 (the "how dare you" section for "no" answer)
+      // 9.5 maps to section 9.5 (gift reveal page)
+      let targetId = num;
+      if (num === 3.5) targetId = 3;
+      if (num === 9.5) targetId = '9.5';
+
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById('section' + i);
+        if (el) { el.style.display = 'none'; }
+      }
+      const el95 = document.getElementById('section9.5');
+      if (el95) { el95.style.display = 'none'; }
+
+      const target = document.getElementById('section' + targetId);
+      if (target) {
+        target.style.display = 'flex';
+        target.classList.remove('fade-in');
+        void target.offsetWidth;
+        target.classList.add('fade-in');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // If going to gift section, trigger confetti
+      if (targetId === 4) {
+        setTimeout(() => launchConfetti(), 400);
+      }
+
+      // If going to countdown section, start countdown
+      if (targetId === 7) {
+        setTimeout(() => startCountdown(), 400);
+      }
+
+      currentSection = targetId;
+    }
+
+    function startCountdown() {
+      if (countdownInterval) clearInterval(countdownInterval);
+      
+      function updateCountdown() {
+        const targetDate = new Date(defaultConfig.countdown_date).getTime();
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          document.getElementById('countdown-display').textContent = "🎉 TODAY! 🎉";
+          return;
         }
 
-        function openGift(index) {
-            const gift = gifts[index];
-            document.getElementById('giftEmoji').textContent = gift.emoji;
-            document.getElementById('giftTitle').textContent = gift.title;
-            document.getElementById('giftText').textContent = gift.text;
-            
-            // Load image
-            const photoDiv = document.getElementById('giftPhoto');
-            const img = photoDiv.querySelector('img') || document.createElement('img');
-            img.src = gift.image;
-            img.onerror = function() { photoDiv.style.display = 'none'; };
-            img.onload = function() { photoDiv.style.display = 'block'; };
-            photoDiv.innerHTML = '';
-            photoDiv.appendChild(img);
-            
-            document.getElementById('giftModal').classList.add('active');
-        }
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-        function closeGift() {
-            document.getElementById('giftModal').classList.remove('active');
-        }
+        document.getElementById('countdown-display').textContent = 
+          `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
 
-        function restart() {
-            nextSection(1);
-        }
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
 
-        // Close modal on outside click
-        document.getElementById('giftModal').addEventListener('click', function(e) {
-            if (e.target === this) closeGift();
-        });
-    </script>
-</body>
+    function blowCandle() {
+      const flames = document.getElementById('flames');
+      if (flames) {
+        flames.style.opacity = '0';
+        flames.style.transition = 'opacity 0.7s ease-out';
+      }
+      setTimeout(() => launchConfetti(), 300);
+    }
+
+    function openGift(el, index) {
+      openedGifts.add(index);
+      
+      const msg = giftMessages[index];
+      document.getElementById('gift-emoji').textContent = msg.emoji;
+      document.getElementById('gift-message').textContent = msg.title;
+      document.getElementById('gift-detail').textContent = msg.detail;
+
+      // Show image if available
+      const imageContainer = document.getElementById('gift-image-container');
+      if (msg.image) {
+        const img = document.getElementById('gift-image');
+        img.src = msg.image;
+        img.style.display = 'block';
+        imageContainer.style.display = 'block';
+      } else {
+        imageContainer.style.display = 'none';
+      }
+
+      // Animate the clicked gift
+      el.style.transform = 'scale(1.15) rotate(-5deg)';
+      setTimeout(() => { el.style.transform = ''; }, 400);
+
+      launchConfetti();
+      
+      // Update button visibility
+      const continueBtn = document.querySelector('[onclick="goToSection(10)"]');
+      const backBtn = document.querySelector('[onclick="goToSection(9)"]');
+      
+      if (openedGifts.size === 4) {
+        // All gifts opened - show CONTINUE
+        if (continueBtn) continueBtn.style.display = 'inline-block';
+        if (backBtn) backBtn.style.display = 'none';
+      } else {
+        // Not all opened - show BACK only
+        if (continueBtn) continueBtn.style.display = 'none';
+        if (backBtn) backBtn.style.display = 'inline-block';
+      }
+      
+      // Go to gift reveal page
+      setTimeout(() => goToSection(9.5), 500);
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confetti-container');
+      const colors = ['#FF69B4', '#FFD700', '#87CEFA', '#A3D977', '#FFB6C1', '#9B59B6', '#FF6347'];
+      for (let i = 0; i < 50; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.top = '-10px';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 1.5 + 's';
+        piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+        piece.style.width = (6 + Math.random() * 8) + 'px';
+        piece.style.height = (6 + Math.random() * 8) + 'px';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        container.appendChild(piece);
+      }
+      setTimeout(() => { container.innerHTML = ''; }, 4000);
+    }
+
+    function shareMessage() {
+      const text = `You're invited to my birthday celebration! Come check out my special birthday page!`;
+      if (navigator.share) {
+        navigator.share({ title: 'Happy Birthday!', text: text });
+      } else {
+        alert('Share feature not available on this device.');
+      }
+    }
+
+    // Fix: Section 2 YES should go to section 9
+    // Update the YES button onclick in section 2
+    document.addEventListener('DOMContentLoaded', function() {
+      // Reassign YES button to go to gifts
+      const sec2 = document.getElementById('section2');
+      const btns = sec2.querySelectorAll('button');
+      btns[0].onclick = function() { goToSection(9); };
+      btns[1].onclick = function() { goToSection(3); };
+    });
+
+    // Element SDK
+    function applyConfig(config) {
+      const c = { ...defaultConfig, ...config };
+      document.body.style.background = c.background_color;
+
+      const mainHeading = document.getElementById('main-heading');
+      if (mainHeading) mainHeading.style.color = c.heading_color;
+
+      const surpriseHeading = document.getElementById('surprise-heading');
+      if (surpriseHeading) surpriseHeading.style.color = c.accent_color;
+
+      const giftHeading = document.getElementById('gift-heading');
+      if (giftHeading) giftHeading.style.color = c.text_color;
+
+      const loveMsg = document.getElementById('love-message');
+      if (loveMsg) loveMsg.textContent = c.love_message;
+
+      const outroMsg = document.getElementById('outro-message');
+      if (outroMsg) outroMsg.textContent = c.outro_message;
+
+      const cakeTxt = document.getElementById('cake-message');
+      if (cakeTxt) cakeTxt.textContent = c.virtual_cake_text;
+
+      const countdownName = document.getElementById('countdown-name');
+      if (countdownName) countdownName.textContent = c.birthday_name;
+
+      const fontStack = `${c.font_family}, Nunito, Comic Sans MS, cursive, sans-serif`;
+      document.querySelectorAll('.font-baloo').forEach(el => { el.style.fontFamily = fontStack; });
+
+      // Update name in heading if present
+      if (c.birthday_name) {
+        const h = document.getElementById('main-heading');
+        if (h) h.innerHTML = `HAPPY BIRTHDAY<br>MY GIRL<span style="color:${c.accent_color}"></span>`;
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: async (config) => { applyConfig(config); },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => config.button_color || defaultConfig.button_color, set: (v) => { config.button_color = v; window.elementSdk.setConfig({ button_color: v }); } },
+            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => config.heading_color || defaultConfig.heading_color, set: (v) => { config.heading_color = v; window.elementSdk.setConfig({ heading_color: v }); } },
+            { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["virtual_cake_text", config.virtual_cake_text || defaultConfig.virtual_cake_text],
+          ["countdown_date", config.countdown_date || defaultConfig.countdown_date],
+          ["love_message", config.love_message || defaultConfig.love_message],
+          ["outro_message", config.outro_message || defaultConfig.outro_message]
+        ])
+      });
+    }
+
+    applyConfig(defaultConfig);
+    lucide.createIcons();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e3efeec1551b089',t:'MTc3NDc4ODU3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
