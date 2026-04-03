@@ -49,6 +49,28 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full overflow-auto" style="background:#F8F8FF;">
+  <!-- Add this anywhere in your birthday page body -->
+<div style="text-align:center; padding:40px; background:#f8f9fa; border-radius:16px; margin:24px auto; max-width:400px;">
+  <h3 style="font-family:'Baloo 2', cursive; color:#FF69B4; margin-bottom:16px;">📱 Scan Me!</h3>
+  <div id="qrcode" style="margin:0 auto 16px;"></div>
+  <p style="color:#666; font-size:14px; margin:0;">Works on all phones & computers</p>
+</div>
+
+<!-- Add these scripts before </body> -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script>
+  // Generate QR code for your birthday page
+  QRCode.toCanvas(document.getElementById('qrcode'), window.location.href, {
+    width: 256,
+    margin: 2,
+    color: {
+      dark: '#FF69B4',  // Pink like your theme
+      light: '#FFFFFF'
+    }
+  }, function (error) {
+    if (error) console.error(error);
+  });
+</script>
   <div id="app" class="w-full h-full"><!-- SECTION 1: Welcome -->
    <section id="section1" class="fade-in" style="min-height:100%; display:flex; align-items:center; justify-content:center;">
     <div class="section-container" style="text-align:center; padding-top:48px; padding-bottom:48px;">
