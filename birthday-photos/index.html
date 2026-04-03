@@ -293,6 +293,7 @@
       </svg>
      </div>
      <h2 id="outro-message" class="font-baloo" style="font-size:32px; color:#1E90FF; font-weight:700; margin:32px 0; letter-spacing:1.5px; line-height:1.6;">I Love you the mostest.</h2>
+     <div id="finalQR" style="margin-top:30px;"></div>
      <p class="font-nunito" style="font-size:20px; color:#555; margin:24px 0; font-style:italic;">Thank you for being such an amazing person. Keep smiling! 🌟</p>
      <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:48px;"><button class="next-btn" onclick="goToSection(1)">REPLAY</button>
      </div>
@@ -352,6 +353,12 @@
       // If going to gift section, trigger confetti
       if (targetId === 4) {
         setTimeout(() => launchConfetti(), 400);
+      }
+      // When reaching final section → generate QR
+      if (targetId === 10) {
+        setTimeout(() => {
+        generateFinalQR();
+        }, 500);
       }
 
       // If going to countdown section, start countdown
@@ -541,9 +548,23 @@
         ])
       });
     }
+    function generateFinalQR() {
+  const message =  "Happy Birthday ❤️ " + document.getElementById("outro-message").innerText;
+
+  const qrContainer = document.getElementById("finalQR");
+  qrContainer.innerHTML = "";
+
+  new QRCode(qrContainer, {
+    text: message,
+    width: 200,
+    height: 200
+  });
+}
 
     applyConfig(defaultConfig);
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e3efeec1551b089',t:'MTc3NDc4ODU3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e3efeec1551b089',t:'MTc3NDc4ODU3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
 </html>
