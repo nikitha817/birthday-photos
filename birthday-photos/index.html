@@ -354,16 +354,17 @@
       if (targetId === 4) {
         setTimeout(() => launchConfetti(), 400);
       }
+      
+
+      // If going to countdown section, start countdown
+      if (targetId === 7) {
+        setTimeout(() => startCountdown(), 400);
+      }
       // When reaching final section → generate QR
       if (targetId === 10) {
         setTimeout(() => {
         generateFinalQR();
         }, 500);
-      }
-
-      // If going to countdown section, start countdown
-      if (targetId === 7) {
-        setTimeout(() => startCountdown(), 400);
       }
 
       currentSection = targetId;
@@ -560,6 +561,7 @@
     height: 200
   });
 }
+console.log("QR FUNCTION CALLED");
 
     applyConfig(defaultConfig);
     lucide.createIcons();
